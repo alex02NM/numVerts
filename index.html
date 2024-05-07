@@ -1,83 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebGL Triangle</title>
-  <canvas id="c"></canvas>
-  <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
-  <script>
-    // WebGL2 - No Data - Point Circle
-// from https://webgl2fundamentals.org/webgl/webgl-no-data-point-circle.html
-
-
-'use strict';
-const gl = document.querySelector('#c').getContext('webgl2');
-
-const vs = `#version 300 es
-uniform int numVerts;
-uniform vec2 resolution;
-
-#define PI radians(180.0)
-
-void main() {
-float u = float(gl_VertexID) / float(numVerts);  // goes from 0 to 1
-
-// Define the vertices of the triangle
-vec2 vertex1 = vec2(0.0, 0.0);  // Define the coordinates of the first vertex
-vec2 vertex2 = vec2(0.0, 2.0);  // Define the coordinates of the second vertex
-vec2 vertex3 = vec2(1.0, -0.7);  // Define the coordinates of the third vertex
-
-// Interpolate between the vertices to get the position of the current point
-vec2 pos = mix(mix(vertex1, vertex2, u), vertex3, u);
-
-  //float angle = u * PI * 2.0;                      // goes from 0 to 2PI
-  //float radius = 10.2;
-  //vec2 pos = vec2(cos(angle), sin(angle)) * radius;
-
-
-
-
-  gl_Position = vec4(pos, 0, 1);
-  gl_PointSize = 10.0;
-}
-`;
-
-const fs = `#version 300 es
-precision highp float;
-
-out vec4 outColor;
-
-void main() {
-  outColor = vec4(0, 0, 1, 1);
-}
-`;
-
-// setup GLSL program
-const program = webglUtils.createProgramFromSources(gl, [vs, fs]);
-const numVertsLoc = gl.getUniformLocation(program, 'numVerts');
-const resolutionLoc = gl.getUniformLocation(program, 'resolution');
-
-const numVerts = 3;
-
-// draw
-webglUtils.resizeCanvasToDisplaySize(gl.canvas);
-gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-gl.useProgram(program);
-
-// tell the shader the number of verts
-gl.uniform1i(numVertsLoc, numVerts);
-// tell the shader the resolution
-gl.uniform2f(resolutionLoc, gl.canvas.width, gl.canvas.height);
-
-const offset = 0;
-gl.drawArrays(gl.TRIANGLES, offset, numVerts);
-
-  </script>
-</head>
+    <html>
 <body>
-  <canvas id="c" width="400" height="400"></canvas>
-  <script src="webgl-utils.js"></script>
+    
+      <canvas id="webgl-canvas"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alex02NM/controls/mobile.js"></script>
+
+<script src="backend.js"></script>
+
 </body>
 </html>
